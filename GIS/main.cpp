@@ -1,52 +1,25 @@
 #include <iostream>
+#include <string>
 #include "BaseGraph.h"
-#include "FibHeap.h"
+#include "GraphOperations.h"
 
 using namespace std;
+using namespace GraphOperations;
 
-vector<int> dijkstra(BaseGraph &g, int current) {
-	FibHeap<int, int> heap;
-	vector<FibHeap<int, int>::TreeNode*> verticles;
-	vector<bool> visited;
-	vector<int> distArray;
-	verticles.resize(g.verticesCount());
-	visited.resize(g.verticesCount());
-	distArray.resize(g.verticesCount());
-
-	for (int i=0; i<g.verticesCount(); i++) {
-		verticles[i] = heap.insert(i, numeric_limits<int>::max());
-		distArray[i] = numeric_limits<int>::max();
-		visited[i] = false;
-	}
-	distArray[current] = 0;
-	heap.decreaseKey(verticles[current], 0);
-
-	while (true) {
-		for (auto &edge: g.edges[current]) {
-			int neighbor = edge.dest;
-			int tentativeDist = distArray[current] + edge.weight;
-			if (!visited[neighbor] && tentativeDist < distArray[neighbor]) {
-				distArray[neighbor] = tentativeDist;
-				heap.decreaseKey(verticles[neighbor], tentativeDist);
-			}
-		}
-
-		visited[current] = true;
-		// In order to remove a particular item from heap, decrease it's key
-		// to minimum and remove minimum object from heap.
-		heap.decreaseKey(verticles[current], numeric_limits<int>::min());
-		heap.removeMin();
-
-		if (!heap.empty()) {
-			current = heap.min().value();
-		} else {
-			break;
-		}
+// --------------------------------------------------------------------------
+string pathToString(vector<int> &path) {
+	if (path.empty()) {
+		return string("None");
 	}
 
-	return distArray;
+	string result;
+	for (int i = 0; i < path.size() - 1; i++) {
+		result += to_string(path[i]) + " -> ";
+	}
+	return result + to_string(path[path.size() - 1]);
 }
 
+// --------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
 	// Check argument number
 	if (argc != 2) {
@@ -65,13 +38,10 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	// Perform algorithm
-	vector<int> distances = dijkstra(graph, 0);
-
-	// Print results
-	for (int i = 0; i < distances.size(); i++) {
-		cout << i << ": " << distances[i] << endl;
-	}
+	// perform algo
+	SearchResult pathInfo = dijkstra_modified(graph, 0, graph.verticesCount() - 1);
+	cout << pathToString(pathInfo.path).c_str() << endl;
+	cout << "Length: " << pathInfo.length << endl;
 
 	getchar();
 	return 0;
