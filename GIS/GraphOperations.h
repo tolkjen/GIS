@@ -1,6 +1,8 @@
-#pragma once
+#ifndef __GRAPH_OPERATIONS_H
+#define __GRAPH_OPERATIONS_H
 
 #include "BaseGraph.h"
+#include <list>
 
 namespace GraphOperations {
 
@@ -10,9 +12,11 @@ namespace GraphOperations {
 //  Stores information about found path - vertices and path length.
 	class SearchResult {
 	public:
-		SearchResult(vector<int> p, double l);
+		SearchResult(const list<int> &p, double l);
+		SearchResult(double l = 0) :
+			length(l) {}
 
-		vector<int> path;
+		std::list<int> path;
 		double length;
 	};
 
@@ -34,3 +38,5 @@ namespace GraphOperations {
 	SearchResult dijkstra_modified(BaseGraph &g, int vertexFrom, int vertexTo);
 
 }
+
+#endif /* __GRAPH_OPERATIONS_H */

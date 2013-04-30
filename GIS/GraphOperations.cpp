@@ -6,17 +6,14 @@ namespace GraphOperations {
 
 	using namespace std;
 
-	SearchResult::SearchResult(vector<int> p, double l) :
-		path(p), length(l)
-	{
-	}
+	SearchResult::SearchResult(const list<int> &p, double l) :
+		path(p),
+		length(l) {}
 
 	SearchResult dijkstra(BaseGraph &g, int vertexFrom, int vertexTo) {
-		// If vertexTo equals vertexFrom, return sequence containing only one
-		// vertex.
-		if (vertexFrom == vertexTo) {
-			return SearchResult(vector<int>(1, vertexFrom), 0.0);
-		}
+		// If vertexTo equals vertexFrom, return empty sequence
+		if (vertexFrom == vertexTo)
+			return SearchResult(0);
 
 		FibHeap<int, double> heap;
 		vector<FibHeap<int, double>::TreeNode*> verticles;
@@ -73,28 +70,26 @@ namespace GraphOperations {
 
 		// If current doesn't equal vertexTo, algorithm wasn't able to create 
 		// path from vertexFrom to vertexTo. Return empty sequence.
-		if (current != vertexTo) {
-			return SearchResult(vector<int>(), numeric_limits<double>::max());
-		}
+		if (current != vertexTo)
+			return SearchResult(-1);
 
 		// If path exists, get path vertices by backtracking from vertexTo to 
 		// vertexFrom using previousVertexArray. Reverse it to get order from
 		// vertexFrom to VertexTo.
-		vector<int> shortestPath;
+		list<int> shortestPath;
 		do {
-			shortestPath.push_back(current);
+			shortestPath.push_front(current);
 			current = previousVertexArray[current];
 		} while (current != -1);
-		std::reverse(shortestPath.begin(), shortestPath.end());
+		shortestPath.pop_front();
+		shortestPath.pop_back();
 		return SearchResult(shortestPath, distArray[vertexTo]);
 	}
 
 	SearchResult dijkstra_modified(BaseGraph &g, int vertexFrom, int vertexTo) {
-		// If vertexTo equals vertexFrom, return sequence containing only one
-		// vertex.
-		if (vertexFrom == vertexTo) {
-			return SearchResult(vector<int>(1, vertexFrom), 0.0);
-		}
+		// If vertexTo equals vertexFrom, return empty sequence
+		if (vertexFrom == vertexTo)
+			return SearchResult(0);
 
 		FibHeap<int, double> heap;
 		vector<FibHeap<int, double>::TreeNode*> verticles;
@@ -148,19 +143,19 @@ namespace GraphOperations {
 
 		// If current doesn't equal vertexTo, algorithm wasn't able to create 
 		// path from vertexFrom to vertexTo. Return empty sequence.
-		if (current != vertexTo) {
-			return SearchResult(vector<int>(), numeric_limits<double>::max());
-		}
+		if (current != vertexTo)
+			return SearchResult(-1);
 
 		// If path exists, get path vertices by backtracking from vertexTo to 
 		// vertexFrom using previousVertexArray. Reverse it to get order from
 		// vertexFrom to VertexTo.
-		vector<int> shortestPath;
+		list<int> shortestPath;
 		do {
-			shortestPath.push_back(current);
+			shortestPath.push_front(current);
 			current = previousVertexArray[current];
 		} while (current != -1);
-		std::reverse(shortestPath.begin(), shortestPath.end());
+		shortestPath.pop_front();
+		shortestPath.pop_back();
 		return SearchResult(shortestPath, distArray[vertexTo]);
 	}
 }
