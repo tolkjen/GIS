@@ -1,18 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <map>
+#include <cassert>
+#include <iostream>
 
 using namespace std;
 
 class BaseGraph {
 public:
-
-	class Edge {
-	public:
-		Edge(int d, double w);
-		int dest;
-		double weight;
-	};
 
 	class InputFileAccessException: public exception {
 		virtual const char* what() const throw() {
@@ -30,7 +26,7 @@ public:
 	int verticesCount(void);
 	void loadFromFile(char *fname);
 
-	vector<vector<Edge>> edges;
+	vector<map<int, double>> edges;
 
 private:
 	int _verticesCount, _edgesCount;

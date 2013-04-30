@@ -27,14 +27,10 @@ void BaseGraph::loadFromFile( char *fname ) {
 			fclose(fptr);
 			throw InputFileFormatException();
 		}
-		edges[src].push_back(Edge(dest, weight));
+		edges[src][dest] = weight;
 	}
 }
 
 int BaseGraph::verticesCount( void ) {
 	return _verticesCount;
-}
-
-BaseGraph::Edge::Edge(int d, double w) : dest(d), weight(w)
-{
 }

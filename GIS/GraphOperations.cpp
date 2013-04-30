@@ -42,8 +42,8 @@ namespace GraphOperations {
 
 		while (true) {
 			for (auto &edge: g.edges[current]) {
-				int neighbor = edge.dest;
-				double tentativeDist = distArray[current] + edge.weight;
+				int neighbor = edge.first;
+				double tentativeDist = distArray[current] + edge.second;
 				if (!visited[neighbor] && tentativeDist < distArray[neighbor]) {
 					distArray[neighbor] = tentativeDist;
 					previousVertexArray[neighbor] = current;
@@ -117,8 +117,8 @@ namespace GraphOperations {
 
 		while (true) {
 			for (auto &edge: g.edges[current]) {
-				int neighbor = edge.dest;
-				double tentativeDist = distArray[current] + edge.weight;
+				int neighbor = edge.first;
+				double tentativeDist = distArray[current] + edge.second;
 				if (tentativeDist < distArray[neighbor]) {
 					distArray[neighbor] = tentativeDist;
 					previousVertexArray[neighbor] = current;
