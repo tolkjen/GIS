@@ -30,11 +30,11 @@ public:
 		inline Key key() { return _key; }
 
 	private:
+		TreeNode *parent, *child, *next, *prev;
 		Value _value;
 		Key _key;
 		int degree;
 		bool marked;
-		TreeNode *parent, *child, *next, *prev;
 	};
 
 	FibHeap(void);
