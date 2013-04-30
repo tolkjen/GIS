@@ -27,8 +27,8 @@ public:
 	void loadFromFile(char *fname);
 
 	vector<map<int, double>> edges;
+	vector<map<int, double>> edgesTo;
 
 private:
 	int _verticesCount, _edgesCount;
 };
-

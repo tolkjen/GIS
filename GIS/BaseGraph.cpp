@@ -19,6 +19,7 @@ void BaseGraph::loadFromFile( char *fname ) {
 
 	edges.clear();
 	edges.resize(_verticesCount);
+	edgesTo.resize(_verticesCount);
 
 	int src, dest;
 	double weight;
@@ -28,6 +29,7 @@ void BaseGraph::loadFromFile( char *fname ) {
 			throw InputFileFormatException();
 		}
 		edges[src][dest] = weight;
+		edgesTo[dest][src] = weight;
 	}
 }
 
