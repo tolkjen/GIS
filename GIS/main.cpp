@@ -192,8 +192,17 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	while (scanf("%d %d", &from, &to) == 2)
+	while (scanf("%d %d", &from, &to) == 2) {
+		if (from < 0 || from >= (int)graph.edges.size()) {
+			cerr << "Nieprawidlowy wierzcholek startowy" << endl;
+			return -1;
+		}
+		if (to < 0 || to >= (int)graph.edges.size()) {
+			cerr << "Nieprawidlowy wierzcholek koncowy" << endl;
+			return -1;
+		}
 		shortestPair(graph, from, to);
+	}
 
 	getchar();
 	return 0;
