@@ -154,7 +154,7 @@ static int shortestPair(BaseGraph &srcGraph, int from, int to)
 		cout << e.first << " ";
 		len += srcGraph.edges[e.first][e.second];
 	}
-	cout << to << " " << len << endl;
+	cout << to << " (" << len << ")" << endl;
 
 	len = 0;
 
@@ -162,7 +162,7 @@ static int shortestPair(BaseGraph &srcGraph, int from, int to)
 		cout << e.first << " ";
 		len += srcGraph.edges[e.first][e.second];
 	}
-	cout << to << " " << len << endl;
+	cout << to << " (" << len << ")" << endl;
 
 	return 0;
 }
