@@ -86,18 +86,20 @@ static int shortestPair(BaseGraph &srcGraph, int from, int to)
 
 	map<int, int> clones;
 
-	prev = from;
-	int prev2 = path.path.front();
-	for (int v : path.path) {
-		int v2 = graph.splitVertex(v);
-		graph.addEdge(v2, v, 0);
-		graph.removeEdge(v2, prev);
-		graph.removeEdge(prev2, v);
-		clones[v2] = v;
-		prev = v;
-		prev2 = v2;
+	if (!path.path.empty()) {
+		prev = from;
+		int prev2 = path.path.front();
+		for (int v : path.path) {
+			int v2 = graph.splitVertex(v);
+			graph.addEdge(v2, v, 0);
+			graph.removeEdge(v2, prev);
+			graph.removeEdge(prev2, v);
+			clones[v2] = v;
+			prev = v;
+			prev2 = v2;
+		}
+		graph.removeEdge(prev2, to);
 	}
-	graph.removeEdge(prev2, to);
 
 	print(graph, "graph1c.dot");
 
